@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes</title>
+    <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+    <style>
+        .wrapper-buttons {
+            display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+        }
+        .wrapper-buttons span, .wrapper-buttons form, .wrapper-buttons p {
+        padding-right: 10px;
+        }
+        .change {
+            display: none;
+        }
+        .form-input {
+            display: none;
+        }
+        .form-input.change {
+            display: block;
+        }
+        p {
+            margin-block-start: 0.5em;
+            margin-block-end: 0.5em;
+        }
+        input {
+            height: 31px;
+        }
+    </style>
+    <div class="wrapper">
+        <!-- vue start -->
+        <div id="app">
+            {{title}}
+            <form @submit.prevent="onSubmit">
+                <input type="text" required v-model="input.value" :placeholder="input.placeholder"/>
+                <button type="submit">Добавьте запись</button>
+            </form>
+            <div class="wrapper-answer">
+                <div class="wrapper-answer-note" v-for="(note, index) in notes" :key="index">
+                    <div class="wrapper-buttons">
+                        <span @click="remove(index)">&#10005;</span>
+                        <span  @click="changeNote (index)">&#9998;</span>
+                        <p v-if="!visibleNote[index]">
+                            {{note}}
+                        </p>
+                        <form v-else  @submit.prevent="changeNote(index)">
+                            <input type="text" :placeholder="note" v-model="notes[index]"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- vue end -->
+
+    </div>
+    <script src="./app.js"></script>
+</body>
+</html>
